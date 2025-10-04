@@ -131,18 +131,66 @@ Deploy your Daily Water Intake Tracker **completely FREE** using AWS Free Tier r
 
 ## 🔗 Step 3: Connect to Your Server
 
-### For Windows (using built-in SSH):
+### Option A: Using PuTTY (Windows - .ppk files) 🔧
+
+**If you downloaded a `.ppk` file, use PuTTY:**
+
+#### 3.1 Download and Install PuTTY
+1. Go to: https://www.putty.org/
+2. Download and install PuTTY (takes 2 minutes)
+
+#### 3.2 Configure PuTTY Connection
+1. **Open PuTTY application**
+
+2. **Basic Connection Settings:**
+   - **Host Name:** `ubuntu@YOUR-EC2-IP-ADDRESS`
+   - **Port:** `22`
+   - **Connection type:** `SSH`
+
+3. **Configure SSH Authentication:**
+   - In left panel: **Connection → SSH → Auth → Credentials**
+   - **Private key file:** Click "Browse..."
+   - Navigate to: `Documents\water-tracker-key.ppk`
+   - Select your key file
+
+4. **Save Session (Recommended):**
+   - Return to **Session** tab
+   - **Saved Sessions:** `water-tracker-server`
+   - Click **"Save"**
+
+5. **Connect:**
+   - Click **"Open"**
+   - **Security Alert:** Click "Accept" (first time only)
+
+#### 📋 PuTTY Quick Setup Checklist
+- [ ] PuTTY installed
+- [ ] Host Name: `ubuntu@YOUR-EC2-IP-ADDRESS`
+- [ ] Port: 22, SSH selected
+- [ ] Key file: `Documents\water-tracker-key.ppk`
+- [ ] Session saved for future use
+- [ ] Successfully connected
+
+#### 3.3 Successful Connection
+You'll see:
+```
+Welcome to Ubuntu 24.04.1 LTS (GNU/Linux 6.8.0-1014-aws x86_64)
+ubuntu@ip-172-31-xx-xx:~$ 
+```
+
+### Option B: Using Command Line (.pem files)
+
+#### For Windows (PowerShell):
 ```powershell
 # Open PowerShell/Command Prompt
 # Navigate to where you saved the key file
-cd Downloads
+cd Documents
 # Set proper permissions
 icacls water-tracker-key.pem /inheritance:r /grant:r %username%:R
 # Connect to server (replace YOUR-IP with actual IP)
 ssh -i water-tracker-key.pem ubuntu@YOUR-IP-ADDRESS
 ```
 
-### For Mac/Linux:
+#### For Mac/Linux:
 ```bash
 # Open Terminal
 # Navigate to where you saved the key file
@@ -155,6 +203,21 @@ ssh -i water-tracker-key.pem ubuntu@YOUR-IP-ADDRESS
 
 **First connection will ask:** `Are you sure you want to continue connecting?`
 - Type: `yes` and press Enter
+
+### 🆘 Common Connection Issues
+
+#### **PuTTY "Unable to open connection"**
+- ✅ Check your EC2 IP address is correct
+- ✅ Verify security group allows SSH (port 22)
+- ✅ Ensure EC2 instance is "Running"
+
+#### **"Server refused our key"**
+- ✅ Make sure you selected the correct `.ppk` file
+- ✅ Verify username is `ubuntu@` not just the IP
+
+#### **Command Line "Permission denied"**
+- ✅ Wrong key file path or permissions
+- ✅ Check username is `ubuntu`
 
 ## 🛠️ Step 4: Deploy Application (One Command!)
 

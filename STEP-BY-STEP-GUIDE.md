@@ -15,12 +15,42 @@ Deploy your Daily Water Intake Tracker **completely FREE** using AWS Free Tier r
 - DynamoDB (25 GB storage)
 - CloudFront CDN (1 TB transfer)
 
+**⚠️ IMPORTANT - Free Tier Instance Types (Updated 2025):**
+
+**Current AWS Free Tier Eligibility** (as of October 2025):
+- ✅ **Check the "Free tier eligible" label** - AWS has updated their free tier
+- ✅ **t3.micro** - Now appears as FREE in many regions (newer offering)
+- ✅ **t2.micro** - Traditional free tier instance (may vary by region)
+
+**⚠️ CRITICAL: Always look for the "Free tier eligible" label in the AWS console!**
+
+**If you see t3.micro as "Free tier eligible":**
+- ✅ **USE t3.micro** - It's actually better performance than t2.micro
+- ✅ **1 GB memory, better CPU performance**
+- ✅ **Still within AWS Free Tier limits**
+
+**Only use instances that show "Free tier eligible" label in YOUR specific region!**
+
 ## 📋 Prerequisites Checklist
 
 - [ ] AWS Account (requires credit card for verification, but won't be charged)
 - [ ] Domain name (optional - use free services like Freenom or use IP address)
 - [ ] Basic computer with internet connection
 - [ ] SSH client (built into Windows 10+, Mac, Linux)
+
+## 🆕 **AWS Free Tier Update (2025)**
+
+**Important Notice:** AWS has updated their Free Tier program in 2025. The specific instance types that are "free tier eligible" may vary by:
+
+- **Region** (different AWS regions may have different offerings)
+- **Account type** (new vs. existing accounts)
+- **Date** (AWS periodically updates free tier offerings)
+
+**What to do:**
+1. ✅ **Always trust the AWS console** - look for "Free tier eligible" label
+2. ✅ **t3.micro is often the new free tier offering** (better than t2.micro)
+3. ✅ **Choose whatever shows "Free tier eligible" in YOUR region**
+4. ❌ **Never assume** - always verify in the console
 
 ## 🚀 Step 1: Create AWS Account (FREE)
 
@@ -50,11 +80,17 @@ Deploy your Daily Water Intake Tracker **completely FREE** using AWS Free Tier r
 
 **Application and OS Images:**
 - Select "Ubuntu"
-- Choose "Ubuntu Server 22.04 LTS (HVM), SSD Volume Type"
+- Choose "Ubuntu Server 24.04 LTS (HVM), SSD Volume Type" 
+- AMI ID: ami-02d26659fd82cf299 (64-bit x86)
 - Architecture: 64-bit (x86)
 
 **Instance Type:**
-- Select **t2.micro** (Free tier eligible - shows "Free tier eligible" label)
+- Look for the **"Free tier eligible"** label next to the instance type
+- ✅ **If t3.micro shows "Free tier eligible"** → Select t3.micro (better performance!)
+- ✅ **If t2.micro shows "Free tier eligible"** → Select t2.micro (traditional choice)
+- ❌ **NEVER select instances without "Free tier eligible" label**
+
+**Current Status (October 2025):** Many users report t3.micro as free tier eligible
 
 **Key Pair:**
 1. Click "Create new key pair"
@@ -129,13 +165,15 @@ curl -O https://raw.githubusercontent.com/Anamikamahi18/daily-water-intake/main/
 ```
 
 This will automatically:
-- Update the system
+- Update the system (Ubuntu 24.04 LTS)
 - Install Python, MySQL, Nginx
 - Download your application
 - Set up the database
 - Configure all services
 
 **Wait time:** 5-10 minutes depending on internet speed.
+
+**Note:** The deployment script works perfectly with Ubuntu 24.04 LTS!
 
 ## 🔧 Step 5: Post-Deployment Configuration
 
@@ -347,11 +385,15 @@ sudo systemctl restart nginx
 5. **Release unused Elastic IPs**
 
 ### AWS Free Tier Expiration (After 12 months)
-- **Upgrade to t3.micro:** ~$8.50/month
+- **Continue with free tier instance:** Will cost ~$8-12/month after free tier
+- **Upgrade to larger instances:** Better performance but higher costs
 - **Or migrate to other free services:**
   - Google Cloud Platform (3 months free)
   - Digital Ocean ($200 credit)
-  - Heroku (free tier)
+  - Oracle Cloud (always free tier)
+  - Railway, Render, or Fly.io (free tiers available)
+
+**Note:** t3.micro typically costs ~$10.50/month, t2.micro costs ~$8.50/month after free tier expires.
 
 ## 📞 Support & Resources
 

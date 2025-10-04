@@ -1,0 +1,10 @@
+[Unit]
+Description=watertracker socket
+
+[Socket]
+ListenStream=/run/watertracker/watertracker.sock
+SocketUser=www-data
+SocketMode=660
+
+[Install]
+WantedBy=sockets.target

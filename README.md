@@ -100,6 +100,17 @@ python manage.py runserver
 
 Visit `http://127.0.0.1:8000/` in your browser.
 
+## Production Deployment
+
+For production deployment on AWS EC2 with Gunicorn, Nginx, and MySQL, see the [DEPLOYMENT.md](DEPLOYMENT.md) guide.
+
+### Quick Deployment Summary
+1. Launch Ubuntu 22.04 EC2 instance
+2. Run deployment script: `sudo ./deployment/deploy.sh`
+3. Configure environment variables and domain
+4. Set up SSL certificate (optional)
+5. Monitor and maintain
+
 ## Project Structure
 
 ```
@@ -127,10 +138,23 @@ daily-water-intake-site/
 │   │           └── signup.html
 │   └── watertracker/              # Project settings
 │       ├── settings.py
+│       ├── production_settings.py # Production configuration
 │       ├── urls.py
 │       └── wsgi.py
+├── deployment/                    # Deployment files
+│   ├── deploy.sh                  # Automated deployment script
+│   ├── requirements.txt           # Production dependencies
+│   ├── nginx.conf                 # Nginx configuration
+│   ├── watertracker.service       # Systemd service file
+│   ├── watertracker.socket        # Systemd socket file
+│   ├── .env.example              # Environment variables template
+│   ├── update.sh                 # Update script
+│   ├── backup.sh                 # Backup script
+│   └── monitor.sh                # Health monitoring script
 ├── venv/                          # Virtual environment
-└── README.md
+├── .gitignore                     # Git ignore rules
+├── README.md                      # This file
+└── DEPLOYMENT.md                  # Deployment guide
 ```
 
 ## Usage

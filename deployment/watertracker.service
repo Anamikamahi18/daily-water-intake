@@ -1,0 +1,33 @@
+[Unit]
+Description=Gunicorn instance to serve Daily Water Intake Tracker
+Requires=watertracker.socket
+After=network.target
+
+[Service]
+Type=notify
+User=watertracker
+Group=watertracker
+RuntimeDirectory=watertracker
+WorkingDirectory=/opt/watertracker/app/watertracker
+Environment="PATH=/opt/watertracker/app/venv/bin"
+Environment="DJANGO_SETTINGS_MODULE=watertracker.production_settings"
+ExecStart=/opt/watertracker/app/venv/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --worker-class sync \
+          --worker-connections 1000 \
+          --max-requests 1000 \
+          --max-requests-jitter 100 \
+          --timeout 30 \
+          --keep-alive 2 \
+          --bind unix:/run/watertracker/watertracker.sock \
+          watertracker.wsgi:application
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

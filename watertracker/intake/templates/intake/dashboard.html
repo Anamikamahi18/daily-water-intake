@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Water Tracker{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-calendar-day"></i> Today's Water Intake</h5>
+                <span class="badge bg-primary">{{ "now"|date:"M d, Y" }}</span>
+            </div>
+            <div class="card-body">
+                {% if today_intake %}
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h2 class="text-primary mb-0">{{ today_intake.amount }}L</h2>
+                            <small class="text-muted">Added at {{ today_intake.created_at|date:"g:i A" }}</small>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <a href="{% url 'edit_intake' today_intake.pk %}" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-pencil"></i> Edit
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="text-center py-4">
+                        <i class="bi bi-droplet text-muted" style="font-size: 3rem;"></i>
+                        <h5 class="text-muted mt-3">No water intake recorded for today</h5>
+                        <a href="{% url 'add_intake' %}" class="btn btn-primary mt-2">
+                            <i class="bi bi-plus-circle"></i> Add Today's Intake
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-clock-history"></i> Recent Water Intake</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_intakes %}
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Time Added</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for intake in recent_intakes %}
+                                <tr>
+                                    <td>{{ intake.date }}</td>
+                                    <td>{{ intake.amount }}L</td>
+                                    <td>{{ intake.created_at|date:"g:i A" }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="{% url 'intake_list' %}" class="btn btn-outline-primary">View All History</a>
+                    </div>
+                {% else %}
+                    <p class="text-muted text-center">No water intake records found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-lightning"></i> Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    {% if not today_intake %}
+                    <a href="{% url 'add_intake' %}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Add Today's Intake
+                    </a>
+                    {% endif %}
+                    <a href="{% url 'intake_list' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-list"></i> View History
+                    </a>
+                    <a href="{% url 'compare_intake' %}" class="btn btn-outline-info">
+                        <i class="bi bi-bar-chart"></i> Compare Dates
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-info-circle"></i> Tips</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Aim for 8 glasses (2L) per day</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Drink water first thing in the morning</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-success"></i> Keep a water bottle nearby</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

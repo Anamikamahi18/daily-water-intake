@@ -50,7 +50,7 @@ Track your daily water intake, visualize your progress, and compare with friends
 	python manage.py runserver
 	```
 7. **Access the app:**
-	- Visit `http://127.0.0.1:8000/` in your browser.
+	- Visit `http://65.0.100.218/` in your browser.
 
 ## Deployment
 

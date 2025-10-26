@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up - Water Tracker{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header text-center">
+                <h4><i class="bi bi-person-plus"></i> Create Account</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="{{ form.username.id_for_label }}" class="form-label">Username</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="text-danger small">{{ form.username.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name</label>
+                                {{ form.first_name }}
+                                {% if form.first_name.errors %}
+                                    <div class="text-danger small">{{ form.first_name.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name</label>
+                                {{ form.last_name }}
+                                {% if form.last_name.errors %}
+                                    <div class="text-danger small">{{ form.last_name.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.email.id_for_label }}" class="form-label">Email</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="text-danger small">{{ form.email.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3 position-relative">
+                        <label for="{{ form.password1.id_for_label }}" class="form-label">Password</label>
+                        <div class="input-group">
+                            {{ form.password1 }}
+                            <button type="button" class="btn btn-outline-secondary" id="togglePassword1" tabindex="-1">
+                                <i class="bi bi-eye-slash" id="eyeIcon1"></i>
+                            </button>
+                        </div>
+                        {% if form.password1.errors %}
+                            <div class="text-danger small">
+                                {{ form.password1.errors.0 }}
+                            </div>
+                        {% endif %}
+                        <ul class="small mt-2 mb-0 ps-3" style="font-size: 0.80em;">
+                            <li>Your password can’t be too similar to your other personal information.</li>
+                            <li>Your password must contain at least 8 characters.</li>
+                            <li>Your password can’t be a commonly used password.</li>
+                            <li>Your password can’t be entirely numeric.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-3 position-relative">
+                        <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password</label>
+                        <div class="input-group">
+                            {{ form.password2 }}
+                            <button type="button" class="btn btn-outline-secondary" id="togglePassword2" tabindex="-1">
+                                <i class="bi bi-eye-slash" id="eyeIcon2"></i>
+                            </button>
+                        </div>
+                        {% if form.password2.errors %}
+                            <div class="text-danger small">{{ form.password2.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-person-plus"></i> Create Account
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="text-center mt-3">
+                    <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Password eye toggle for signup
+    document.addEventListener('DOMContentLoaded', function() {
+        const pwd1 = document.getElementById('{{ form.password1.id_for_label }}');
+        const pwd2 = document.getElementById('{{ form.password2.id_for_label }}');
+        const btn1 = document.getElementById('togglePassword1');
+        const btn2 = document.getElementById('togglePassword2');
+        const eye1 = document.getElementById('eyeIcon1');
+        const eye2 = document.getElementById('eyeIcon2');
+        if (btn1 && pwd1) {
+            btn1.addEventListener('click', function() {
+                if (pwd1.type === 'password') {
+                    pwd1.type = 'text';
+                    eye1.classList.remove('bi-eye-slash');
+                    eye1.classList.add('bi-eye');
+                } else {
+                    pwd1.type = 'password';
+                    eye1.classList.remove('bi-eye');
+                    eye1.classList.add('bi-eye-slash');
+                }
+            });
+        }
+        if (btn2 && pwd2) {
+            btn2.addEventListener('click', function() {
+                if (pwd2.type === 'password') {
+                    pwd2.type = 'text';
+                    eye2.classList.remove('bi-eye-slash');
+                    eye2.classList.add('bi-eye');
+                } else {
+                    pwd2.type = 'password';
+                    eye2.classList.remove('bi-eye');
+                    eye2.classList.add('bi-eye-slash');
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

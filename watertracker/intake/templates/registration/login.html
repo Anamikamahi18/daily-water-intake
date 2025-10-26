@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - Water Tracker{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header text-center">
+                <h4><i class="bi bi-box-arrow-in-right"></i> Login</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">Username</label>
+                        <input type="text" class="form-control" name="username" id="id_username" required autocomplete="username">
+                    </div>
+                    
+                    <div class="mb-3 position-relative">
+                        <label for="id_password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" name="password" id="id_password" required autocomplete="current-password">
+                            <button type="button" class="btn btn-outline-secondary" id="toggleLoginPassword" tabindex="-1">
+                                <i class="bi bi-eye-slash" id="eyeLogin"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <small>Invalid username or password.</small>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-box-arrow-in-right"></i> Login
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="text-center mt-3">
+                    <p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Password eye toggle for login
+    document.addEventListener('DOMContentLoaded', function() {
+        const pwd = document.getElementById('id_password');
+        const btn = document.getElementById('toggleLoginPassword');
+        const eye = document.getElementById('eyeLogin');
+        if (btn && pwd) {
+            btn.addEventListener('click', function() {
+                if (pwd.type === 'password') {
+                    pwd.type = 'text';
+                    eye.classList.remove('bi-eye-slash');
+                    eye.classList.add('bi-eye');
+                } else {
+                    pwd.type = 'password';
+                    eye.classList.remove('bi-eye');
+                    eye.classList.add('bi-eye-slash');
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
